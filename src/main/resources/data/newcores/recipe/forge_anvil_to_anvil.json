@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "newcores:forge_anvil"
+    }
+  ],
+  "result": {
+    "id": "minecraft:anvil"
+  }
+}

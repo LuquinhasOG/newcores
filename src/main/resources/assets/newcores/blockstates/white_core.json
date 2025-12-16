@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "newcores:block/white_core"
+    }
+  }
+}

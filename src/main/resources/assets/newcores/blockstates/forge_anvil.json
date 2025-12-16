@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "newcores:block/forge_anvil", "y": 90 },
+    "facing=south": { "model": "newcores:block/forge_anvil", "y": 90 },
+    "facing=west": { "model": "newcores:block/forge_anvil" },
+    "facing=east": { "model": "newcores:block/forge_anvil" }
+  }
+}

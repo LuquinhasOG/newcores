@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "newcores:silver_ore",
+    "newcores:deepslate_silver_ore",
+    "newcores:deepslate_mithril_ore",
+    "newcores:forge_anvil"
+  ]
+}

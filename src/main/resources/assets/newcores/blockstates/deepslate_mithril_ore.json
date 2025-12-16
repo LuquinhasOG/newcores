@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "newcores:block/deepslate_mithril_ore"
+    }
+  }
+}
