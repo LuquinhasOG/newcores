@@ -1,6 +1,8 @@
 {
   "values": [
     "newcores:silver_plate",
-    "newcores:mithril_plate"
+    "newcores:mithril_plate",
+    "newcores:white_core",
+    "newcores:black_core"
   ]
 }

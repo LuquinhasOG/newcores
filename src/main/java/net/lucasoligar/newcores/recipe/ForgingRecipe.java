@@ -13,21 +13,41 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-public record ForgingRecipe(Ingredient input, ItemStack output) implements Recipe<ForgingRecipeInput> {
+/**
+ * ForgingRecipe
+ *
+ * Type name: newcores:forging
+ * Ingredient Fields: material, armor_tool, extra_material
+ * Output Field: result
+ *
+ * JSON Example:
+ * {
+ *   "type": "newcores:forging",
+ *   "material": { "item": "newcores:silver_ingot" },
+ *   "result": { "id": "newcores:silver_plate" }
+ * }
+ * **/
+
+public record ForgingRecipe(Ingredient material, Ingredient armorTool,Ingredient extraMaterial,
+                            ItemStack output) implements Recipe<ForgingRecipeInput> {
     @Override
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> list = NonNullList.create();
-        list.add(input);
+        list.add(material);
+        list.add(armorTool);
+        list.add(extraMaterial);
+
         return list;
     }
 
     // read recipes JSON to ForgingRecipe
     @Override
     public boolean matches(ForgingRecipeInput pInput, Level pLevel) {
-        if (pLevel.isClientSide())
-            return false;
+        boolean matOk = material == Ingredient.EMPTY || material.test(pInput.getItem(0));
+        boolean toolOk = armorTool == Ingredient.EMPTY || armorTool.test(pInput.getItem(1));
+        boolean extraOk = extraMaterial == Ingredient.EMPTY || extraMaterial.test(pInput.getItem(2));
 
-        return input.test(pInput.getItem(0));
+        return matOk && toolOk && extraOk;
     }
 
     @Override
@@ -57,15 +77,19 @@ public record ForgingRecipe(Ingredient input, ItemStack output) implements Recip
 
     public static class Serializer implements RecipeSerializer<ForgingRecipe> {
         public static final MapCodec<ForgingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-                Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(ForgingRecipe::input),
+                Ingredient.CODEC.optionalFieldOf("material", Ingredient.EMPTY).forGetter(ForgingRecipe::material),
+                Ingredient.CODEC.optionalFieldOf("armor_tool", Ingredient.EMPTY).forGetter(ForgingRecipe::armorTool),
+                Ingredient.CODEC.optionalFieldOf("extra_material", Ingredient.EMPTY).forGetter(ForgingRecipe::extraMaterial),
                 ItemStack.CODEC.fieldOf("result").forGetter(ForgingRecipe::output)
                 ).apply(inst, ForgingRecipe::new)
         );
 
         public static final StreamCodec<RegistryFriendlyByteBuf, ForgingRecipe> STREAM_CODEC =
                 StreamCodec.composite(
-                        Ingredient.CONTENTS_STREAM_CODEC, ForgingRecipe::input, ItemStack.STREAM_CODEC,
-                        ForgingRecipe::output, ForgingRecipe::new);
+                        Ingredient.CONTENTS_STREAM_CODEC, ForgingRecipe::material,
+                        Ingredient.CONTENTS_STREAM_CODEC, ForgingRecipe::armorTool,
+                        Ingredient.CONTENTS_STREAM_CODEC, ForgingRecipe::extraMaterial,
+                        ItemStack.STREAM_CODEC, ForgingRecipe::output, ForgingRecipe::new);
 
         @Override
         public MapCodec<ForgingRecipe> codec() {

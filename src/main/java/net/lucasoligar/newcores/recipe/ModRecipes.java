@@ -24,7 +24,7 @@ public class ModRecipes {
             = TYPES.register("forging", () -> new RecipeType<ForgingRecipe>() {
         @Override
         public String toString() {
-            return "forging";
+            return NewCoresMod.MODID + ":forging";
         }
     });
 

@@ -2,7 +2,6 @@ package net.lucasoligar.newcores.block.custom;
 
 import com.mojang.serialization.MapCodec;
 import net.lucasoligar.newcores.block.entity.custom.ForgeAnvilBlockEntity;
-import net.lucasoligar.newcores.item.ModItems;
 import net.lucasoligar.newcores.item.custom.HammerItem;
 import net.lucasoligar.newcores.recipe.ForgingRecipe;
 import net.lucasoligar.newcores.recipe.ForgingRecipeInput;
@@ -35,6 +34,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ForgeAnvilBlock extends BaseEntityBlock {
@@ -100,11 +100,17 @@ public class ForgeAnvilBlock extends BaseEntityBlock {
         return true;
     }
 
-    private Optional<RecipeHolder<ForgingRecipe>> currentRecipe(Level level, BlockPos pos) {
+    private Optional<RecipeHolder<ForgingRecipe>> getRecipe(Level level, BlockPos pos) {
         ForgeAnvilBlockEntity block = (ForgeAnvilBlockEntity) level.getBlockEntity(pos);
+        ForgingRecipeInput inputs = new ForgingRecipeInput(block.inv.getStackInSlot(ForgeAnvilBlockEntity.MATERIAL_SLOT)
+                , block.inv.getStackInSlot(ForgeAnvilBlockEntity.ARMOR_TOOL_SLOT)
+                        , block.inv.getStackInSlot(ForgeAnvilBlockEntity.EXTRA_SLOT));
 
-        return level.getRecipeManager().getRecipeFor(ModRecipes.FORGING_TYPE.get(),
-                new ForgingRecipeInput(block.inv.getStackInSlot(0)), level);
+        return level.getRecipeManager().getRecipeFor(ModRecipes.FORGING_TYPE.get(), inputs, level);
+    }
+
+    private List<RecipeHolder<ForgingRecipe>> getAllRecipes(Level level, BlockPos pos) {
+        return level.getRecipeManager().getAllRecipesFor(ModRecipes.FORGING_TYPE.get());
     }
 
     private boolean isMaterial(ItemStack item) {
@@ -176,12 +182,12 @@ public class ForgeAnvilBlock extends BaseEntityBlock {
             ItemStackHandler inv = forgeAnvil.inv;
 
             if (onHand.getItem() instanceof HammerItem) {
-                Optional<RecipeHolder<ForgingRecipe>> recipe = currentRecipe(pLevel, pPos);
+                Optional<RecipeHolder<ForgingRecipe>> recipe = getRecipe(pLevel, pPos);
 
                 if (recipe.isPresent()) {
                     ItemStack output = recipe.get().value().output();
-                    inv.extractItem(0, 1, false);
-                    inv.insertItem(0, output.copy(), false);
+                    forgeAnvil.clearContents();
+                    inv.insertItem(ForgeAnvilBlockEntity.OUTPUT_SLOT, output.copy(), false);
 
                     onHand.hurtAndBreak(1, pPlayer, EquipmentSlot.MAINHAND);
                     pLevel.playSound(null, pPos, SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 1f, 1f);

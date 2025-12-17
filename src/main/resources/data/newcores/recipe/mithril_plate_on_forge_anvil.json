@@ -1,9 +1,5 @@
 {
   "type": "newcores:forging",
-  "ingredient": {
-    "item": "newcores:mithril_ingot"
-  },
-  "result": {
-    "id": "newcores:mithril_plate"
-  }
+  "material": { "item": "newcores:mithril_ingot" },
+  "result": { "id": "newcores:mithril_plate" }
 }
