@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ForgeAnvilBlockEntity extends BlockEntity {
-    public final ItemStackHandler inv = new ItemStackHandler(1) {
+    public final ItemStackHandler inv = new ItemStackHandler(4) {
         @Override
         protected int getStackLimit(int slot, @NotNull ItemStack stack) {
             return 1;
@@ -32,12 +32,18 @@ public class ForgeAnvilBlockEntity extends BlockEntity {
         }
     };
 
+    public static final int MATERIAL_SLOT = 0;
+    public static final int ARMOR_TOOL_SLOT = 1;
+    public static final int EXTRA_SLOT = 2;
+    public static final int OUTPUT_SLOT = 3;
+
     public ForgeAnvilBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.FORGE_ANVIL_BE.get(), pPos, pBlockState);
     }
 
     public void clearContents() {
-        inv.setStackInSlot(0, ItemStack.EMPTY);
+        for (int i = 0; i  < inv.getSlots(); i++)
+            inv.setStackInSlot(i, ItemStack.EMPTY);
     }
 
     public void dropItems() {
@@ -46,6 +52,10 @@ public class ForgeAnvilBlockEntity extends BlockEntity {
             aux.setItem(i, inv.getStackInSlot(i));
 
         Containers.dropContents(this.level, this.worldPosition, aux);
+    }
+
+    public boolean isSlotFree(int slot) {
+        return inv.getStackInSlot(slot).isEmpty();
     }
 
     @Override
@@ -70,6 +80,4 @@ public class ForgeAnvilBlockEntity extends BlockEntity {
     public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
         return saveWithoutMetadata(pRegistries);
     }
-
-
 }

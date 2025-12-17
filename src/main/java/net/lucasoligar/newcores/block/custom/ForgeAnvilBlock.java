@@ -7,6 +7,7 @@ import net.lucasoligar.newcores.item.custom.HammerItem;
 import net.lucasoligar.newcores.recipe.ForgingRecipe;
 import net.lucasoligar.newcores.recipe.ForgingRecipeInput;
 import net.lucasoligar.newcores.recipe.ModRecipes;
+import net.lucasoligar.newcores.tag.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -106,23 +107,60 @@ public class ForgeAnvilBlock extends BaseEntityBlock {
                 new ForgingRecipeInput(block.inv.getStackInSlot(0)), level);
     }
 
+    private boolean isMaterial(ItemStack item) {
+        return item.is(ModTags.Items.FORGING_MATERIAL);
+    }
+
+    private boolean isArmorOrTool(ItemStack item) {
+        return item.is(ModTags.Items.FORGING_ARMOR_TOOL);
+    }
+
+    private boolean isExtraMaterial(ItemStack item) {
+        return item.is(ModTags.Items.FORGING_EXTRA_MATERIAL);
+    }
+
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos,
                                               Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
         if (pLevel.getBlockEntity(pPos) instanceof ForgeAnvilBlockEntity forgeAnvil) {
             ItemStack onHand = pPlayer.getItemInHand(InteractionHand.MAIN_HAND);
 
-            if (forgeAnvil.inv.getStackInSlot(0).isEmpty() && !onHand.isEmpty()) {
-                if (onHand.is(ModItems.MITHRIL_INGOT.get()) || onHand.is(ModItems.SILVER_INGOT.get())) {
-                    forgeAnvil.inv.insertItem(0, onHand.copy(), false);
+            if (!onHand.isEmpty() && forgeAnvil.isSlotFree(ForgeAnvilBlockEntity.OUTPUT_SLOT)) {
+                if (isMaterial(onHand) && forgeAnvil.isSlotFree(ForgeAnvilBlockEntity.MATERIAL_SLOT)) {
+                    forgeAnvil.inv.insertItem(ForgeAnvilBlockEntity.MATERIAL_SLOT, onHand.copy(), false);
                     onHand.shrink(1);
                     pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
+
+                    return ItemInteractionResult.SUCCESS;
+                } else if (isArmorOrTool(onHand) && forgeAnvil.isSlotFree(ForgeAnvilBlockEntity.ARMOR_TOOL_SLOT)) {
+                    forgeAnvil.inv.insertItem(ForgeAnvilBlockEntity.ARMOR_TOOL_SLOT, onHand.copy(), false);
+                    onHand.shrink(1);
+                    pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
+
+                    return ItemInteractionResult.SUCCESS;
+                } else if (isExtraMaterial(onHand) && forgeAnvil.isSlotFree(ForgeAnvilBlockEntity.EXTRA_SLOT)) {
+                    forgeAnvil.inv.insertItem(ForgeAnvilBlockEntity.EXTRA_SLOT, onHand.copy(), false);
+                    onHand.shrink(1);
+                    pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
+
                     return ItemInteractionResult.SUCCESS;
                 }
-            } else if (!forgeAnvil.inv.getStackInSlot(0).isEmpty()) {
-                ItemStack onAnvil = forgeAnvil.inv.extractItem(0, 1, false);
-                pPlayer.addItem(onAnvil);
+            } else if (forgeAnvil.isSlotFree(ForgeAnvilBlockEntity.MATERIAL_SLOT)
+                    || forgeAnvil.isSlotFree(ForgeAnvilBlockEntity.ARMOR_TOOL_SLOT)
+                    || forgeAnvil.isSlotFree(ForgeAnvilBlockEntity.EXTRA_SLOT)
+                    || forgeAnvil.isSlotFree(ForgeAnvilBlockEntity.OUTPUT_SLOT)) {
+                ItemStack material = forgeAnvil.inv.extractItem(ForgeAnvilBlockEntity.MATERIAL_SLOT, 1, false);
+                ItemStack armor_tool = forgeAnvil.inv.extractItem(ForgeAnvilBlockEntity.ARMOR_TOOL_SLOT, 1, false);
+                ItemStack extra = forgeAnvil.inv.extractItem(ForgeAnvilBlockEntity.EXTRA_SLOT, 1, false);
+                ItemStack output = forgeAnvil.inv.extractItem(ForgeAnvilBlockEntity.OUTPUT_SLOT, 1, false);
+
+                pPlayer.addItem(material);
+                pPlayer.addItem(armor_tool);
+                pPlayer.addItem(extra);
+                pPlayer.addItem(output);
+
                 forgeAnvil.clearContents();
+
                 pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
                 return ItemInteractionResult.SUCCESS;
             }
