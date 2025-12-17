@@ -6,6 +6,7 @@ import net.lucasoligar.newcores.block.entity.ModBlockEntities;
 import net.lucasoligar.newcores.block.renderer.ForgeAnvilBlockEntityRederer;
 import net.lucasoligar.newcores.item.ModCreativeModeTabs;
 import net.lucasoligar.newcores.item.ModItems;
+import net.lucasoligar.newcores.recipe.ModRecipes;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -36,9 +37,12 @@ public class NewCoresMod {
         MinecraftForge.EVENT_BUS.register(this);
 
         ModCreativeModeTabs.register(modEventBus);
+
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
+
+//        ModRecipes.register(modEventBus);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);

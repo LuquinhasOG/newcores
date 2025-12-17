@@ -70,4 +70,6 @@ public class ForgeAnvilBlockEntity extends BlockEntity {
     public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
         return saveWithoutMetadata(pRegistries);
     }
+
+
 }

@@ -4,6 +4,9 @@ import com.mojang.serialization.MapCodec;
 import net.lucasoligar.newcores.block.entity.custom.ForgeAnvilBlockEntity;
 import net.lucasoligar.newcores.item.ModItems;
 import net.lucasoligar.newcores.item.custom.HammerItem;
+import net.lucasoligar.newcores.recipe.ForgingRecipe;
+import net.lucasoligar.newcores.recipe.ForgingRecipeInput;
+import net.lucasoligar.newcores.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -14,6 +17,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -29,6 +33,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class ForgeAnvilBlock extends BaseEntityBlock {
     public static final VoxelShape SHAPE_EAST = Block.box(3, 0, 0, 13, 16, 16);
@@ -93,6 +99,13 @@ public class ForgeAnvilBlock extends BaseEntityBlock {
         return true;
     }
 
+    private Optional<RecipeHolder<ForgingRecipe>> currentRecipe(Level level, BlockPos pos) {
+        ForgeAnvilBlockEntity block = (ForgeAnvilBlockEntity) level.getBlockEntity(pos);
+
+        return level.getRecipeManager().getRecipeFor(ModRecipes.FORGING_TYPE.get(),
+                new ForgingRecipeInput(block.inv.getStackInSlot(0)), level);
+    }
+
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos,
                                               Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
@@ -123,23 +136,18 @@ public class ForgeAnvilBlock extends BaseEntityBlock {
         if (pLevel.getBlockEntity(pPos) instanceof ForgeAnvilBlockEntity forgeAnvil) {
             ItemStack onHand = pPlayer.getItemInHand(InteractionHand.MAIN_HAND);
             ItemStackHandler inv = forgeAnvil.inv;
-            boolean success = false;
 
             if (onHand.getItem() instanceof HammerItem) {
-                if (inv.getStackInSlot(0).is(ModItems.MITHRIL_INGOT.get())) {
-                    inv.extractItem(0, 1, false);
-                    inv.insertItem(0, new ItemStack(ModItems.MITHRIL_PLATE.get()), false);
-                    success = true;
-                } else if (inv.getStackInSlot(0).is(ModItems.SILVER_INGOT.get())) {
-                    inv.extractItem(0, 1, false);
-                    inv.insertItem(0, new ItemStack(ModItems.SILVER_PLATE.get()), false);
-                    success = true;
-                }
-            }
+                Optional<RecipeHolder<ForgingRecipe>> recipe = currentRecipe(pLevel, pPos);
 
-            if (success) {
-                onHand.hurtAndBreak(1, pPlayer, EquipmentSlot.MAINHAND);
-                pLevel.playSound(null, pPos, SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 1f, 1f);
+                if (recipe.isPresent()) {
+                    ItemStack output = recipe.get().value().output();
+                    inv.extractItem(0, 1, false);
+                    inv.insertItem(0, output.copy(), false);
+
+                    onHand.hurtAndBreak(1, pPlayer, EquipmentSlot.MAINHAND);
+                    pLevel.playSound(null, pPos, SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 1f, 1f);
+                }
             }
         }
 
