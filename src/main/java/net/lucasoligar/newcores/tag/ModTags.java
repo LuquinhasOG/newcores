@@ -18,7 +18,6 @@ public class ModTags {
     public static class Items {
         public static final TagKey<Item> FORGING_MATERIAL = createTag("forging_material");
         public static final TagKey<Item> FORGING_ARMOR_TOOL = createTag("forging_armor_tool");
-        public static final TagKey<Item> FORGING_EXTRA_MATERIAL = createTag("forging_extra_material");
 
         private static TagKey<Item> createTag(String name) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(NewCoresMod.MODID, name));

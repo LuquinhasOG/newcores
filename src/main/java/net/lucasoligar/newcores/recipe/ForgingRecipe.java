@@ -43,9 +43,19 @@ public record ForgingRecipe(Ingredient material, Ingredient armorTool,Ingredient
     // read recipes JSON to ForgingRecipe
     @Override
     public boolean matches(ForgingRecipeInput pInput, Level pLevel) {
-        boolean matOk = material == Ingredient.EMPTY || material.test(pInput.getItem(0));
-        boolean toolOk = armorTool == Ingredient.EMPTY || armorTool.test(pInput.getItem(1));
-        boolean extraOk = extraMaterial == Ingredient.EMPTY || extraMaterial.test(pInput.getItem(2));
+        boolean matOk = material.test(pInput.getItem(0));
+        boolean toolOk = armorTool.test(pInput.getItem(1));
+        boolean extraOk = extraMaterial.test(pInput.getItem(2));
+
+        if (pInput.getItem(0).isEmpty() && material.isEmpty())
+            matOk = true;
+
+        if (pInput.getItem(1).isEmpty() && armorTool.isEmpty())
+            toolOk = true;
+
+        if (pInput.getItem(2).isEmpty() && extraMaterial.isEmpty())
+            extraOk = true;
+
 
         return matOk && toolOk && extraOk;
     }
@@ -77,9 +87,9 @@ public record ForgingRecipe(Ingredient material, Ingredient armorTool,Ingredient
 
     public static class Serializer implements RecipeSerializer<ForgingRecipe> {
         public static final MapCodec<ForgingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-                Ingredient.CODEC.optionalFieldOf("material", Ingredient.EMPTY).forGetter(ForgingRecipe::material),
+                Ingredient.CODEC.optionalFieldOf("material1", Ingredient.EMPTY).forGetter(ForgingRecipe::material),
                 Ingredient.CODEC.optionalFieldOf("armor_tool", Ingredient.EMPTY).forGetter(ForgingRecipe::armorTool),
-                Ingredient.CODEC.optionalFieldOf("extra_material", Ingredient.EMPTY).forGetter(ForgingRecipe::extraMaterial),
+                Ingredient.CODEC.optionalFieldOf("material2", Ingredient.EMPTY).forGetter(ForgingRecipe::extraMaterial),
                 ItemStack.CODEC.fieldOf("result").forGetter(ForgingRecipe::output)
                 ).apply(inst, ForgingRecipe::new)
         );

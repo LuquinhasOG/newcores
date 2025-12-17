@@ -1,5 +1,6 @@
 package net.lucasoligar.newcores.block.custom;
 
+import com.mojang.logging.LogUtils;
 import com.mojang.serialization.MapCodec;
 import net.lucasoligar.newcores.block.entity.custom.ForgeAnvilBlockEntity;
 import net.lucasoligar.newcores.item.custom.HammerItem;
@@ -14,6 +15,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.goal.LandOnOwnersShoulderGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -33,6 +35,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
@@ -121,10 +124,6 @@ public class ForgeAnvilBlock extends BaseEntityBlock {
         return item.is(ModTags.Items.FORGING_ARMOR_TOOL);
     }
 
-    private boolean isExtraMaterial(ItemStack item) {
-        return item.is(ModTags.Items.FORGING_EXTRA_MATERIAL);
-    }
-
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos,
                                               Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
@@ -144,7 +143,7 @@ public class ForgeAnvilBlock extends BaseEntityBlock {
                     pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);
 
                     return ItemInteractionResult.SUCCESS;
-                } else if (isExtraMaterial(onHand) && forgeAnvil.isSlotFree(ForgeAnvilBlockEntity.EXTRA_SLOT)) {
+                } else if (isMaterial(onHand) && forgeAnvil.isSlotFree(ForgeAnvilBlockEntity.EXTRA_SLOT)) {
                     forgeAnvil.inv.insertItem(ForgeAnvilBlockEntity.EXTRA_SLOT, onHand.copy(), false);
                     onHand.shrink(1);
                     pLevel.playSound(pPlayer, pPos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1f, 1f);

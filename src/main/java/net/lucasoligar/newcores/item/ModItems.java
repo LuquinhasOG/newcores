@@ -2,6 +2,7 @@ package net.lucasoligar.newcores.item;
 
 import net.lucasoligar.newcores.NewCoresMod;
 import net.lucasoligar.newcores.item.custom.HammerItem;
+import net.lucasoligar.newcores.item.custom.LightningSummonerItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -35,6 +36,9 @@ public class ModItems {
             () -> new HammerItem(new Item.Properties()
                     .stacksTo(1)
                     .durability(50)));
+
+    public static final RegistryObject<Item> TEST = ITEMS.register("test",
+            () -> new LightningSummonerItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
