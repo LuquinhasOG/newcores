@@ -30,6 +30,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.MITHRIL_INGOT.get());
                         output.accept(ModItems.MITHRIL_PLATE.get());
 
+                        output.accept(ModBlocks.FORGE_HEATER.get());
                         output.accept(ModBlocks.FORGE_ANVIL.get());
                         output.accept(ModItems.IRON_HAMMER.get());
 

@@ -3,6 +3,7 @@ package net.lucasoligar.newcores.block;
 
 import net.lucasoligar.newcores.NewCoresMod;
 import net.lucasoligar.newcores.block.custom.ForgeAnvilBlock;
+import net.lucasoligar.newcores.block.custom.ForgeHeaterBlock;
 import net.lucasoligar.newcores.item.ModItems;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
@@ -35,6 +36,10 @@ public class ModBlocks {
     public static final RegistryObject<Block> FORGE_ANVIL = registerBlock("forge_anvil",
             () -> new ForgeAnvilBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.ANVIL)
                     .strength(5.0F, 1200.0F).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> FORGE_HEATER = registerBlock("forge_heater",
+            () -> new ForgeHeaterBlock(BlockBehaviour.Properties.of()
+                    .strength(5.0F, 1000.0F).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> BLACK_CORE = registerBlock("black_core",
             () -> new HeavyCoreBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.HEAVY_CORE)));

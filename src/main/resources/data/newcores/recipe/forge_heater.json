@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": { "item": "minecraft:blast_furnace" },
+    "X": { "item": "minecraft:iron_ingot" },
+    "N": { "item": "minecraft:nether_bricks" }
+  },
+  "pattern": [
+    "XNX",
+    "N#N",
+    "XNX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "newcores:forge_heater"
+  }
+}
