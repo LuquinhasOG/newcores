@@ -32,6 +32,15 @@ public class ModItems {
     public static final RegistryObject<Item> MITHRIL_PLATE = ITEMS.register("mithril_plate",
             () -> new Item(new Item.Properties()));
 
+    public static final RegistryObject<Item> GOLD_PLATE = ITEMS.register("gold_plate",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> SILVER_NUGGET = ITEMS.register("silver_nugget",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> MITHRIL_NUGGET = ITEMS.register("mithril_nugget",
+            () -> new Item(new Item.Properties()));
+
     public static final RegistryObject<Item> IRON_HAMMER = ITEMS.register("iron_hammer",
             () -> new HammerItem(new Item.Properties()
                     .stacksTo(1)

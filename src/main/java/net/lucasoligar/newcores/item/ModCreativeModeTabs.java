@@ -23,12 +23,16 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.DEEPSLATE_SILVER_ORE.get());
                         output.accept(ModItems.RAW_SILVER.get());
                         output.accept(ModItems.SILVER_INGOT.get());
-                        output.accept(ModItems.SILVER_PLATE.get());
+                        output.accept(ModItems.SILVER_NUGGET.get());
 
                         output.accept(ModBlocks.DEEPSLATE_MITHRIL_ORE.get());
                         output.accept(ModItems.RAW_MITHRIL.get());
                         output.accept(ModItems.MITHRIL_INGOT.get());
+                        output.accept(ModItems.MITHRIL_NUGGET.get());
+
+                        output.accept(ModItems.SILVER_PLATE.get());
                         output.accept(ModItems.MITHRIL_PLATE.get());
+                        output.accept(ModItems.GOLD_PLATE.get());
 
                         output.accept(ModBlocks.FORGE_HEATER.get());
                         output.accept(ModBlocks.FORGE_ANVIL.get());

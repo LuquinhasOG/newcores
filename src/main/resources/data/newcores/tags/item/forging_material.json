@@ -5,6 +5,7 @@
     "newcores:silver_plate",
     "newcores:mithril_plate",
     "newcores:white_core",
-    "newcores:black_core"
+    "newcores:black_core",
+    "minecraft:gold_ingot"
   ]
 }

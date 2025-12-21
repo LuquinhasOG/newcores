@@ -1,13 +1,13 @@
 {
-  "type": "minecraft:smelting",
+  "type": "minecraft:blasting",
   "category": "misc",
-  "cookingtime": 200,
+  "cookingtime": 100,
   "experience": 1.0,
   "group": "mithril_ingot",
   "ingredient": {
     "item": "newcores:raw_mithril"
   },
   "result": {
-    "id": "newcores:mithril_ingot"
+    "id": "newcores:mithril_nugget"
   }
 }

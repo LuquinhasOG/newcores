@@ -3,7 +3,7 @@
   "textures": {
     "front": "newcores:block/forge_heater_front_on",
     "side": "newcores:block/forge_heater_side",
-    "top": "newcores:block/forge_heater_top",
+    "top": "newcores:block/forge_heater_top_on",
     "bottom": "newcores:block/forge_heater_bottom"
   }
 }

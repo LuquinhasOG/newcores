@@ -1,0 +1,5 @@
+{
+  "type": "newcores:forging",
+  "material1": { "item": "minecraft:gold_ingot" },
+  "result": { "id": "newcores:gold_plate" }
+}

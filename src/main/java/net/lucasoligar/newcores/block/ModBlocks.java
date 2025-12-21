@@ -41,6 +41,10 @@ public class ModBlocks {
             () -> new ForgeHeaterBlock(BlockBehaviour.Properties.of()
                     .strength(5.0F, 1000.0F).requiresCorrectToolForDrops()));
 
+    public static final RegistryObject<Block> FORGE_TOP = registerBlock("forge_top",
+            () -> new Block(BlockBehaviour.Properties.of()
+                    .strength(4.5f, 4.5f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+
     public static final RegistryObject<Block> BLACK_CORE = registerBlock("black_core",
             () -> new HeavyCoreBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.HEAVY_CORE)));
 

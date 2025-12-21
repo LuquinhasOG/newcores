@@ -1,10 +1,13 @@
 {
   "item.newcores.raw_silver": "Raw Silver",
   "item.newcores.silver_ingot": "Silver Ingot",
+  "item.newcores.silver_nugget": "Silver Nugget",
   "item.newcores.raw_mithril": "Raw Mithril",
   "item.newcores.mithril_ingot": "Mithril Ingot",
+  "item.newcores.mithril_nugget": "Mithril Nugget",
   "item.newcores.silver_plate": "Silver Plate",
   "item.newcores.mithril_plate": "Mithril Plate",
+  "item.newcores.gold_plate": "Gold Plate",
   "item.newcores.iron_hammer": "Iron Hammer",
 
   "block.newcores.silver_ore": "Silver Ore",
@@ -13,7 +16,8 @@
   "block.newcores.black_core": "Black Core",
   "block.newcores.white_core": "White Core",
   "block.newcores.forge_anvil": "Forge Anvil",
-  "block.newcores.forge_heater": "Forge Heater",
+  "block.newcores.forge_heater": "Forge Furnace",
+  "block.newcores.forge_top": "Forge Top",
 
   "creativetab.newcores.newcores_creative_tab": "New Cores"
 }

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "newcores:mithril_ingot"
+    }
+  ],
+  "result": {
+    "id": "newcores:mithril_nugget",
+    "count": 4
+  }
+}
