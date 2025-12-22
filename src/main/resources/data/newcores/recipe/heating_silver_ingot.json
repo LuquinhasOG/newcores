@@ -1,0 +1,6 @@
+{
+  "type": "newcores:heating",
+  "ingredient": { "item": "newcores:silver_ingot" },
+  "temp_level": 1,
+  "result": { "id": "minecraft:iron_ingot" }
+}

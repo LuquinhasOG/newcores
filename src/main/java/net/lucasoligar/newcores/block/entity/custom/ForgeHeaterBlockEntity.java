@@ -55,6 +55,10 @@ public class ForgeHeaterBlockEntity extends BlockEntity {
     private int fuel = 0;
     private int temperatureLevel = NONE;
 
+    public int getTemperatureLevel() {
+        return this.temperatureLevel;
+    }
+
     public ForgeHeaterBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.FORGE_HEATER_BE.get(), pPos, pBlockState);
 
@@ -137,7 +141,6 @@ public class ForgeHeaterBlockEntity extends BlockEntity {
     }
 
     public void tick(Level level, BlockPos blockPos, BlockState blockState) {
-        Logger log = LogUtils.getLogger();
         ItemStack fuelItem = inv.getStackInSlot(0);
         setChanged(level, blockPos, blockState);
 
@@ -152,7 +155,9 @@ public class ForgeHeaterBlockEntity extends BlockEntity {
             BlockState newState = currentState.setValue(BlockStateProperties.LIT, isLit());
 
             level.setBlock(blockPos, newState, 3);
-            temperatureLevel = NONE;
+
+            if (fuel <= 0)
+                temperatureLevel = NONE;
         }
 
         if (!fuelItem.isEmpty()) {

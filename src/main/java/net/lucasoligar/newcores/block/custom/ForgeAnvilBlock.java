@@ -112,10 +112,6 @@ public class ForgeAnvilBlock extends BaseEntityBlock {
         return level.getRecipeManager().getRecipeFor(ModRecipes.FORGING_TYPE.get(), inputs, level);
     }
 
-    private List<RecipeHolder<ForgingRecipe>> getAllRecipes(Level level, BlockPos pos) {
-        return level.getRecipeManager().getAllRecipesFor(ModRecipes.FORGING_TYPE.get());
-    }
-
     private boolean isMaterial(ItemStack item) {
         return item.is(ModTags.Items.FORGING_MATERIAL);
     }

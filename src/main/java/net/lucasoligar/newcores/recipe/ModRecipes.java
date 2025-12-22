@@ -19,12 +19,22 @@ public class ModRecipes {
     public static final RegistryObject<RecipeSerializer<ForgingRecipe>> FORGING_SERIALIZER
             = SERIALIZERS.register("forging", ForgingRecipe.Serializer::new);
 
+    public static final RegistryObject<RecipeSerializer<HeatingRecipe>> HEATING_SERIALIZER
+            = SERIALIZERS.register("heating", HeatingRecipe.Serializer::new);
 
     public static final RegistryObject<RecipeType<ForgingRecipe>> FORGING_TYPE
             = TYPES.register("forging", () -> new RecipeType<ForgingRecipe>() {
         @Override
         public String toString() {
             return NewCoresMod.MODID + ":forging";
+        }
+    });
+
+    public static final RegistryObject<RecipeType<HeatingRecipe>> HEATING_TYPE
+            = TYPES.register("heating", () -> new RecipeType<HeatingRecipe>() {
+        @Override
+        public String toString() {
+            return NewCoresMod.MODID + ":heating";
         }
     });
 

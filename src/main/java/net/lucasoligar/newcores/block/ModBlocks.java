@@ -4,6 +4,7 @@ package net.lucasoligar.newcores.block;
 import net.lucasoligar.newcores.NewCoresMod;
 import net.lucasoligar.newcores.block.custom.ForgeAnvilBlock;
 import net.lucasoligar.newcores.block.custom.ForgeHeaterBlock;
+import net.lucasoligar.newcores.block.custom.ForgeTopBlock;
 import net.lucasoligar.newcores.item.ModItems;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
@@ -42,7 +43,7 @@ public class ModBlocks {
                     .strength(5.0F, 1000.0F).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> FORGE_TOP = registerBlock("forge_top",
-            () -> new Block(BlockBehaviour.Properties.of()
+            () -> new ForgeTopBlock(BlockBehaviour.Properties.of()
                     .strength(4.5f, 4.5f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> BLACK_CORE = registerBlock("black_core",

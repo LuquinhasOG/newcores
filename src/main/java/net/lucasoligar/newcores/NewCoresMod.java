@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.lucasoligar.newcores.block.ModBlocks;
 import net.lucasoligar.newcores.block.entity.ModBlockEntities;
 import net.lucasoligar.newcores.block.renderer.ForgeAnvilBlockEntityRederer;
+import net.lucasoligar.newcores.block.renderer.ForgeTopBlockEntityRederer;
 import net.lucasoligar.newcores.item.ModCreativeModeTabs;
 import net.lucasoligar.newcores.item.ModItems;
 import net.lucasoligar.newcores.recipe.ModRecipes;
@@ -73,6 +74,7 @@ public class NewCoresMod {
         @SubscribeEvent
         public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(ModBlockEntities.FORGE_ANVIL_BE.get(), ForgeAnvilBlockEntityRederer::new);
+            event.registerBlockEntityRenderer(ModBlockEntities.FORGE_TOP_BE.get(), ForgeTopBlockEntityRederer::new);
         }
     }
 }

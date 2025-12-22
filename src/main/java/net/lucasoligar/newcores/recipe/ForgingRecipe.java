@@ -23,7 +23,7 @@ import net.minecraft.world.level.Level;
  * JSON Example:
  * {
  *   "type": "newcores:forging",
- *   "material": { "item": "newcores:silver_ingot" },
+ *   "material1": { "item": "newcores:silver_ingot" },
  *   "result": { "id": "newcores:silver_plate" }
  * }
  * **/
